@@ -26,13 +26,13 @@ class App extends React.Component {
     this.handleMenuBarClick = this.handleMenuBarClick.bind(this);
   }
   //
-  //componentDidMount() {
-    // example load user by userName
-    // this.fetch('user', 'dust_off', (user) => {
-    //   this.setState({
-    //     userProfile: user,
-    //   });
-    // });
+  // componentDidMount() {
+  // example load user by userName
+  // this.fetch('user', 'dust_off', (user) => {
+  //   this.setState({
+  //     userProfile: user,
+  //   });
+  // });
 
   fetch(thing, id, cb) {
     $.ajax({
@@ -84,8 +84,8 @@ class App extends React.Component {
   }
 
   handleSearch(query) {
-    //do the fetch here
-    //pass that data into the search page
+    // do the fetch here
+    // pass that data into the search page
 
 
     this.setState({ view: 'Search', searchedBook: query }, function () {
@@ -101,7 +101,7 @@ class App extends React.Component {
   }
 
   setUserProfile(user) {
-    this.setState({ userProfile: user }, function() { this.renderView(); });
+    this.setState({ userProfile: user }, function () { this.renderView(); });
   }
 
   handleLogout() {
@@ -149,15 +149,14 @@ class App extends React.Component {
           searchResults={this.state.searchResults}
         />
       );
-    } 
-      return (
-        <HomePage
-          changeView={this.changeView}
-          fetch={this.fetch}
-          view={this.state.view}
-        />
-      );
-    
+    }
+    return (
+      <HomePage
+        changeView={this.changeView}
+        fetch={this.fetch}
+        view={this.state.view}
+      />
+    );
   }
 
   render() {
