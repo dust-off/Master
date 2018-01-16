@@ -25,14 +25,6 @@ class App extends React.Component {
     this.handleLogout = this.handleLogout.bind(this);
     this.handleMenuBarClick = this.handleMenuBarClick.bind(this);
   }
-  //
-  // componentDidMount() {
-  // example load user by userName
-  // this.fetch('user', 'dust_off', (user) => {
-  //   this.setState({
-  //     userProfile: user,
-  //   });
-  // });
 
   fetch(thing, id, cb) {
     $.ajax({
