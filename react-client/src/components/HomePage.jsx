@@ -24,13 +24,24 @@ class HomePage extends React.Component {
     this.setBook = this.setBook.bind(this);
   }
 
+  // const user = this.props.userProfile.username
+  // this.props.fetch('find', `${isbn13}/${user}`, (data) => {
+  //   console.log(data);
+  // });
+
   componentDidMount() {
-    console.log('mouted');
-    this.getBestSellersBooks();
-    this.setState({
-      loading: true,
-      view: this.props.view,
-    });
+    console.log('not getting anything');
+    // this.setState({
+    //   loading: false,
+    // });
+    // console.log('mouted');
+    // this.getBestSellersBooks();
+    // this.setState({
+    //   loading: true,
+    //   view: this.props.view,
+    //   userProfile: this.props.userProfile,
+    // });
+    // console.log('username', this.props);
   }
 
   getBestSellersBooks() {
@@ -45,7 +56,7 @@ class HomePage extends React.Component {
       })
       .fail((err) => {
         console.log('no gotten?');
-        throw err;
+        console.log(err);
       });
   }
 
@@ -58,7 +69,8 @@ class HomePage extends React.Component {
     books.forEach((book) => {
       if (book.isbns.length > 0) {
         const isbn = book.isbns[0].isbn13;
-        this.props.fetch('book', isbn, (goodReads) => {
+        console.log('Im updating some book', this.state.userProfile.username, isbn);
+        this.props.fetch('book', `${isbn}/${this.state.userProfile.username}`, (goodReads) => {
           // console.log("in Homepage line 59", goodReads);
           returnCount++;
           if (goodReads !== null) {
@@ -113,6 +125,7 @@ class HomePage extends React.Component {
                   book={book}
                   key={book.isbn13}
                   changeView={this.props.changeView}
+                  submitReview={this.props.submitReview}
                 />
             ))}
             </Grid>

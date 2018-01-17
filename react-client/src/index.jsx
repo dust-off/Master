@@ -76,20 +76,29 @@ class App extends React.Component {
   }
 
   handleSearch(query) {
+    console.log('');
+    console.log('submitt search', query);
+    const user = this.state.userProfile.username;
+
+
+    this.fetch('search', query, (results) => {
+      console.log('results', results);
+    });
+
     // do the fetch here
     // pass that data into the search page
 
 
-    this.setState({ view: 'Search', searchedBook: query }, function () {
-      console.log(this.state.searchedBook);
-      this.fetch('search', this.state.searchedBook, (results) => {
-        this.setState({
-          searchResults: results,
-        }, function () {
-          this.renderView();
-        });
-      });
-    });
+    // this.setState({ view: 'Search', searchedBook: query }, () => {
+    //   console.log(this.state.searchedBook);
+    //   this.fetch('search', this.state.searchedBook, (results) => {
+    //     this.setState({
+    //       searchResults: results,
+    //     }, () => {
+    //       this.renderView();
+    //     });
+    //   });
+    // });
   }
 
   setUserProfile(user) {
@@ -115,6 +124,7 @@ class App extends React.Component {
   }
 
   renderView() {
+    console.log(this.state.userProfile);
     if (this.state.view === 'Book') {
       return (
         <BookPage
@@ -122,6 +132,7 @@ class App extends React.Component {
           changeView={this.changeView}
           fetch={this.fetch}
           submitReview={this.submitReview}
+          userProfile={this.state.userProfile}
         />
       );
     } else if (this.state.view === 'Profile') {
@@ -139,6 +150,7 @@ class App extends React.Component {
           changeView={this.changeView}
           searchedBook={this.state.searchedBook}
           searchResults={this.state.searchResults}
+          userProfile={this.state.userProfile}
         />
       );
     }
@@ -147,6 +159,8 @@ class App extends React.Component {
         changeView={this.changeView}
         fetch={this.fetch}
         view={this.state.view}
+        submitReview={this.submitReview}
+        userProfile={this.state.userProfile}
       />
     );
   }

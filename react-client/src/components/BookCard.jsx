@@ -1,17 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-// import classnames from 'classnames';
 import Card, { CardHeader, CardContent, CardActions } from 'material-ui/Card';
-// import Collapse from 'material-ui/transitions/Collapse';
 import IconButton from 'material-ui/IconButton';
 import Typography from 'material-ui/Typography';
 import red from 'material-ui/colors/red';
 import FavoriteIcon from 'material-ui-icons/Favorite';
-// import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import MoreVertIcon from 'material-ui-icons/MoreVert';
 import Divider from 'material-ui/Divider';
-// import renderHTML from 'react-render-html';
 
 import PopUp from './PopUp.jsx';
 import Rating from './Rating.jsx';
@@ -58,6 +54,7 @@ class BookCard extends React.Component {
     this.submitRank = this.submitRank.bind(this);
     this.goToBook = this.goToBook.bind(this);
     this.handleExpandClick = this.handleExpandClick.bind(this);
+    console.log(this.props.book);
   }
 
   componentDidMount() {
@@ -81,8 +78,15 @@ class BookCard extends React.Component {
     this.setState({ expanded: !this.state.expanded });
   }
 
+  passReview() {
+    const { isbn13 } = this.state.book;
+    this.props.submitReview(null, isbn13, this.state.rating);
+  }
+
   submitRank(rating) {
-    // stuff here
+    this.setState({
+      rating,
+    }, this.passReview);
   }
 
   render() {

@@ -4,7 +4,7 @@ const db = require('../database-mongo');
 const api = require('../api/apiHelper.js');
 const { organizeBookData } = require('../api/apiTest.js');
 const { addReviewData } = require('../api/apiTest.js');
-const handler = require('./Handler.js');
+const dbHelper = require('../database-mongo/dbhelper.js');
 
 module.exports = {
   getAllBooks: (req, res) => {
@@ -17,12 +17,38 @@ module.exports = {
     });
   },
   getBookByISBN: (req, res) => {
-    const { isbn } = req.params;
+    const { isbn, user } = req.params;
+    console.log('getting by ', isbn, user);
     db.findBook(isbn, (err, data) => {
+      console.log('');
+      console.log('');
+      console.log('data', data);
       if (err) {
         res.sendStatus(500);
       } else if (data.length > 0) {
-        res.json(data[0]);
+        console.log('found a book', data[0].title);
+        // RETURN USER_REVIEW
+        // then check for a userName and if found
+        // look up the user and get their review and look up the review
+        // then get the review data
+        // let reviewData = [];
+
+        // RETURN FAVORITES
+        // look up username
+        // then look at their favs
+        // if this isbn is in there
+        // do: data[0].favorit = true
+        const reviewID = `${user}${isbn}`;
+        console.log('no the handler:', reviewID);
+        db.findReview(reviewID, (err, review) => {
+          if (err) throw err;
+          console.log('');
+          console.log('attaching the review');
+          console.log(data[0].title);
+          console.log('reviewID', review);
+          data[0].review = review;
+          res.json(data[0]);
+        });
       } else {
         api.searchBook(isbn, (errAPI, searchResults) => {
           if (errAPI) {
@@ -106,16 +132,31 @@ module.exports = {
   },
   getSearchTitle: (req, res) => {
     const { title } = req.params;
-    api.searchBook(title, (err, searchResults) => {
-      if (err) {
-        res.sendStatus(500);
-      } else {
-        const parsResults = searchResults.map((book) => {
-          const cleanBook = organizeBookData(book);
-          return organizeBookData(book);
-        });
-        res.json(parsResults);
-      }
+    let booksToReturn = [];
+    let bob = [];
+    api.searchBook(title, (err, goodReadsIDs) => {
+      dbHelper.bookDetails(goodReadsIDs)
+        .then((data) => {
+          console.log('returned to Handler @ 139');
+          // console.log('bookDetails result');
+          // console.log(data);
+          booksToReturn = data[0];
+          api.goodReadsObjFromIDs(data[1], (grResults) => {
+            console.log('back to handler', grResults.length);
+            // res.json(['in the cb for goodReadsObjFromIDs', grResults.length]);
+            // booksToReturn = booksToReturn.concat(grResults)
+            bob = grResults;
+            return grResults;
+          })
+            .then((grResults) => {
+              console.log();
+              console.log('inside the handler again with grResults.length', grResults.length);
+            });
+        })
+        .then((grResults) => {
+          console.log('this is the Hanlder again but a level above the goodReadsObjFromIDs');
+        })
+        .catch(fail => console.log('fail'));
     });
   },
   getBestSellers: (req, res) => {
@@ -142,6 +183,17 @@ module.exports = {
   postReview: (req, res) => {
     db.saveReview(req.body, (err, data) => {
       res.json([err, data]);
+    });
+  },
+  testFind: (req, res) => {
+    const { isbn, user } = req.params;
+    console.log(isbn, user);
+
+    db.searchReview(isbn, user, (err, data) => {
+      console.log('returning data');
+      console.log('err', err);
+      console.log('data');
+      console.log(data);
     });
   },
 };

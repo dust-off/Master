@@ -15,6 +15,21 @@ db.once('open', () => {
   console.log('mongoose connected successfully');
 });
 
+const searchReview = (isbn, user, cb) => {
+  // const testUser = 'Mish9780062273123';
+  console.log('searchReview', isbn, user);
+  const reviewID = `${user}${isbn}`;
+  Review.find({ idNameNumber: reviewID }).exec(cb);
+};
+
+const searchByGrID = (goodReadsID, cb) => {
+  console.log('db.searchByGrID @ 26');
+  console.log(goodReadsID);
+  Book.find({ goodReadsID }).exec((err, data) => {
+    cb(err, data);
+  });
+};
+
 const bookSchema = mongoose.Schema({
   year: String,
   month: String,
@@ -27,6 +42,7 @@ const bookSchema = mongoose.Schema({
   pages: String,
   popularShelves: [String],
   isbn13: String,
+  goodReadsID: Number,
   genres: [String],
   // reviewWidget: [String]
 });
@@ -111,12 +127,21 @@ const createProfile = (user) => {
   newProfile.save();
 };
 
-const findBook = (book, cb) => {
+const findBook = (book, ...other) => {
+  let user = '';
+  let cb = '';
+  if (typeof other[0] === 'function') {
+    user = '';
+    cb = other[0];
+  } else if (typeof other[1] === 'function') {
+    user = other[0];
+    cb = other[1];
+  }
   // console.log('findBook is working with:', book);
   const pattern = new RegExp('^\\d{10,13}$');
   if ((book.length === 10 || book.length === 13) && pattern.test(book)) {
-    // console.log('its an ISBN?');
-    Book.find({ isbn: book }).exec(cb);
+    console.log('its an ISBN?');
+    Book.find({ isbn13: book }).exec(cb);
   } else {
     Book.find({ title: book }).exec(cb);
   }
@@ -141,6 +166,7 @@ const save = (bookInfo) => {
 };
 
 const findReview = (review, cb) => {
+  console.log('findReview', review);
   Review.findOne({ idNameNumber: review }, (err, item) => {
     if (err) {
       cb(err, null);
@@ -204,4 +230,6 @@ module.exports = {
   save,
   saveReview,
   findReview,
+  searchReview,
+  searchByGrID,
 };
