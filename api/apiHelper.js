@@ -6,6 +6,7 @@ const { NYTKey } = require('./apiKeys.js');
 const apiKeys = require('./apiKeys.js');
 const param = require('jquery-param');
 const db = require('../database-mongo/index.js');
+const { addReviewData2 } = require('./apiTest.js');
 
 const searchBook = (book, cb) => {
   console.log('api.searchBook:', book);
@@ -246,41 +247,77 @@ const goodReadsByID = (goodReadsID, cb) => {
     });
 };
 
-const testPromist =
 
-const goodReadsObjFromIDs = (goodReadsIdArray, cb) => {
+const goodReadsObjFromIDs = (goodReadsIdArray) => {
   console.log('goodReadsIdArray');
   console.log(goodReadsIdArray);
   let count = 0;
   const len = goodReadsIdArray.length;
   const bookObjs = [];
 
-return (
-  const dealWithResults = (i) => {
-    const id = goodReadsIdArray[i];
-    const url = `https://www.goodreads.com/book/show/${id}?format=xml&key=${goodReadsKey}`;
-    axios.get(url)
-    .catch((err) => {
-      console.log('err');
+  return new Promise((resolve, reject) => {
+    const dealWithResults = (i) => {
+      const id = goodReadsIdArray[i];
+      const url = `https://www.goodreads.com/book/show/${id}?format=json&key=${goodReadsKey}`;
+      axios.get(url)
+        .catch((err) => {
+          console.log('err');
+          count++;
+        })
+        .then((data) => {
+          bookObjs[i] = data;
+          count++;
+        })
+        .then(() => {
+          if (count === len) {
+            console.log('The Count is DONE', bookObjs.length);
+            resolve(bookObjs);
+          }
+        });
+    };
+
+    for (let i = 0; i < len; i++) {
+      dealWithResults(i);
+    }
+  });
+};
+
+const parseGrResults = (grResults) => {
+  console.log('');
+  console.log('parseGrResults');
+  console.log(grResults.length);
+  let count = 0;
+  const len = grResults.length;
+  const bookObjs = [];
+
+  return new Promise((resolve, reject) => {
+    const dealWithResults = (i) => {
+      const rawResult = grResults[i];
+      // console.log('grResults.length', grResults.length);
+      const parRez = convert.xml2json(rawResult.data);
+      const jsonRez = JSON.parse(parRez).elements[0].elements[1].elements;
+      // console.log(jsonRez);
+      // console.log(jsonRez);
+      // const parsedData = addReviewData2(jsonRez);
+      // // if (parsedData === null) return;
+      // //
+      // // const genres = filterByPopularShelves(parsedData);
+      // // parsedData.genres = genres;
+      const parsedData = addReviewData2(jsonRez);
+      console.log(parsedData);
       count++;
-    })
-    .then((data) => {
-      bookObjs.push(data);
-      count++;
-    })
-    .then(() => {
-      if (count === len) {
-        console.log('The Count is DONE', bookObjs.length);
-        cb(bookObjs);
+      if (parsedData !== null) {
+        bookObjs[i] = parsedData;
       }
-    });
-  };
+      if (count === len) {
+        resolve(bookObjs);
+      }
+    };
 
-  for (let i = 0; i < len; i++) {
-    dealWithResults(i);
-  }
-
-)
+    for (let i = 0; i < len; i++) {
+      dealWithResults(i);
+    }
+  });
 };
 
 module.exports = {
@@ -290,4 +327,5 @@ module.exports = {
   filterByPopularShelves,
   getBestBooks2,
   goodReadsObjFromIDs,
+  parseGrResults,
 };

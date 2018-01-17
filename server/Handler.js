@@ -133,7 +133,7 @@ module.exports = {
   getSearchTitle: (req, res) => {
     const { title } = req.params;
     let booksToReturn = [];
-    let bob = [];
+    const bob = [];
     api.searchBook(title, (err, goodReadsIDs) => {
       dbHelper.bookDetails(goodReadsIDs)
         .then((data) => {
@@ -141,20 +141,21 @@ module.exports = {
           // console.log('bookDetails result');
           // console.log(data);
           booksToReturn = data[0];
-          api.goodReadsObjFromIDs(data[1], (grResults) => {
-            console.log('back to handler', grResults.length);
-            // res.json(['in the cb for goodReadsObjFromIDs', grResults.length]);
-            // booksToReturn = booksToReturn.concat(grResults)
-            bob = grResults;
-            return grResults;
-          })
-            .then((grResults) => {
-              console.log();
-              console.log('inside the handler again with grResults.length', grResults.length);
-            });
+          return data[1];
         })
-        .then((grResults) => {
-          console.log('this is the Hanlder again but a level above the goodReadsObjFromIDs');
+        .then(api.goodReadsObjFromIDs)
+        .then((jsonData) => {
+          console.log('json Data');
+          console.log(jsonData);
+          console.log('******************');
+          console.log('******************');
+          console.log('******************');
+          res.json(['test', jsonData[0].data]);
+        })
+        .then(api.parseGrResults)
+        .then((data) => {
+          console.log('the data should be parsed now', data.length);
+          console.log('data[0] = ', data[0]);
         })
         .catch(fail => console.log('fail'));
     });
