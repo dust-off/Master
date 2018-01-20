@@ -12,7 +12,7 @@ import TextField from 'material-ui/TextField';
 import $ from 'jquery';
 
 
-class Login extends React.Component {
+class EditProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -37,7 +37,6 @@ class Login extends React.Component {
     this.saveSignupPassword = this.saveSignupPassword.bind(this);
     this.onNameClick = this.onNameClick.bind(this);
     this.onLogoutClick = this.onLogoutClick.bind(this);
-    this.handleClose = this.handleClose.bind(this);
   }
 
   saveName(e) {
@@ -74,10 +73,6 @@ class Login extends React.Component {
     this.setState({ open: true });
   }
 
-  handleClose() {
-    this.setState({ open: false });
-  }
-
   handleLogin() {
     $.ajax({
       url: '/login',
@@ -105,30 +100,6 @@ class Login extends React.Component {
     
   }
 
-  handleSignup() {
-    $.ajax({
-      url: '/signup',
-      type: 'POST',
-      data: JSON.stringify({
-        name: this.state.signup.name,
-        username: this.state.signup.username,
-        password: this.state.signup.password,
-        reviewedBooks: [],
-        favoriteBooks: [],
-      }),
-      success: (data) => {
-        console.log(data);
-        if (data.type === 'success') {
-          alert('User Profile Created! Login to continue');
-        } else{
-          alert('Oh no! That username is already taken. Try again!');
-        }
-      },
-      error: (err) => {
-        console.log('err', err);
-      },
-    });
-  }
 
   onNameClick() {
     this.props.handleProfileClick();
@@ -181,41 +152,7 @@ class Login extends React.Component {
             </DialogContent>
             <DialogActions>
               <Button onClick={this.handleLogin} color="primary">
-                Login
-              </Button>
-            </DialogActions>
-            <DialogContent>
-              <DialogContentText>
-                Sign Up
-              </DialogContentText>
-              <TextField
-                autoFocus
-                margin="dense"
-                id="name"
-                label="name"
-                type="string"
-                onChange={this.saveName}
-              />
-              <TextField
-                autoFocus
-                margin="dense"
-                id="username"
-                label="username"
-                type="string" 
-                onChange={this.saveSignupUsername}
-              />
-              <TextField
-                autoFocus
-                margin="dense"
-                id="signup-password"
-                label="password"
-                type="password"
-                onChange={this.saveSignupPassword}
-              />
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={this.handleSignup} color="primary">
-                Signup
+                Edit Profile
               </Button>
             </DialogActions>
           </Dialog>
@@ -225,4 +162,4 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+export default EditProfile;
