@@ -44,13 +44,12 @@ const User = props => (
 
             </Grid>
             <Grid item xs={8} >
-              <span className="user">
-                    Name : <br /> {props.user.name}
-              </span>
-              <br />
-              <span className="user">
-                    Username : <br /> {props.user.username} <br />
-              </span>
+              <Typography className="user">
+                    Name : {props.user.name}
+              </Typography>
+              <Typography className="user">
+                    Username : {props.user.username} <br />
+              </Typography>
 
               <EditProfile
                 currentUser={props.user.name}

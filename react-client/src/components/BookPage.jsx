@@ -234,6 +234,7 @@ class BookPage extends React.Component {
                 proReviews={this.state.proreviews}
                 userReviews={this.state.userReviews}
                 book={this.props.book}
+                enterReview={this.enterReview}
               />
 
             </Paper>

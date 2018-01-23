@@ -3,13 +3,16 @@ import $ from 'jquery';
 import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import { CircularProgress } from 'material-ui/Progress';
-import Divider from 'material-ui/Divider';
+import Typography from 'material-ui/Typography';
 
 import BookCard from './BookCard';
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
+  },
+  dark: {
+    color: '#3E2723',
   },
 });
 
@@ -26,7 +29,7 @@ class HomePage extends React.Component {
   }
 
   componentDidMount() {
-   // console.log('mounted');
+    // console.log('mounted');
     this.getBestSellersBooks();
     this.setState({
       loading: true,
@@ -126,8 +129,9 @@ class HomePage extends React.Component {
 
     return (
       <div>
-        <h1 style={{ textAlign: 'center' }}> Best Sellers </h1>
-        <Divider light />
+        <Typography align="center" type="display1">
+        Today's Best Sellers
+        </Typography>
         {this.state.loading
           ?
             <div style={{ textAlign: 'center' }}>

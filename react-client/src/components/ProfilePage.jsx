@@ -170,7 +170,7 @@ class ProfilePage extends React.Component {
   }
 
   render() {
-    if (this.props.userProfile.hasOwnProperty('name')) {
+    if (this.props.userProfile.name) {
       return (
         <div className="userProfile">
           <User

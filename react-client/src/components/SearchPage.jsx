@@ -54,7 +54,7 @@ class SearchPage extends React.Component {
       });
       return (
         <div>
-          <h1 style={{ textAlign: 'center' }}> Best Sellers </h1>
+          <h1 style={{ textAlign: 'center' }}> Search Results </h1>
           <Divider light />
           <Grid
             container

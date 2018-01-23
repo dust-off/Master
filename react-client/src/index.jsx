@@ -211,7 +211,7 @@ class App extends React.Component {
           handleMenuBarClick={this.handleMenuBarClick}
 
         />
-        <div style={{ padding: '25px', width: '100%' }} />
+        <div style={{ padding: '30px', width: '100%' }} />
         <div className="main-view">
           {this.renderView()}
         </div>
