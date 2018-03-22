@@ -6,8 +6,8 @@ import Dialog, {
   DialogContentText,
   DialogTitle,
 } from 'material-ui/Dialog';
-import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
-import renderHTML from 'react-render-html';
+// import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
+// import renderHTML from 'react-render-html';
 import TextField from 'material-ui/TextField';
 import axios from 'axios';
 

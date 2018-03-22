@@ -13,3 +13,5 @@ npm-debug.log
 react-client/env/config.js
 
 react-client/dist/bundle.js
+npm-debug.log*
+.vscode/

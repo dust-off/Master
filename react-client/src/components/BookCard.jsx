@@ -80,6 +80,7 @@ class BookCard extends React.Component {
   }
 
   componentDidMount() {
+    console.log(this.props.book)
     if (this.props.book.description) {
       let str = this.props.book.description;
       str = str.replace(/<br>/gi, '\n');

@@ -5,6 +5,7 @@ const { goodReadsKey } = require('./apiKeys.js');
 const { NYTKey } = require('./apiKeys.js');
 const { iDreambooksKey } = require('./apiKeys.js');
 const param = require('jquery-param');
+const { graphTest } = require('./graphQL.js');
 
 const searchBook = (book, cb) => {
   axios.get('https://www.goodreads.com/search.xml', {
@@ -50,6 +51,7 @@ const getMoreBookData = (book, cb) => {
 
 
 const getBestBooks = (cb) => {
+  // graphTest();
   if (BEST_SELLSER_ISBN13) {
     const data = {};
     data.data = BEST_SELLSER_ISBN13;

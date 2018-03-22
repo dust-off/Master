@@ -1,10 +1,18 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const handler = require('./Handler.js');
+const schema = require('../api/schema.js');
+
+const graphqlHTTP = require('express-graphql');
 
 const app = express();
 app.use(express.static(`${__dirname}/../react-client/dist`));
 app.use(bodyParser.json());
+
+app.use('/graphql', graphqlHTTP({
+  schema,
+  graphiql: true,
+}));
 
 app.get('/user/:username', handler.getUserByName);
 app.post('/login', handler.postLogin);

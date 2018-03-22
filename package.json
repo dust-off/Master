@@ -34,11 +34,14 @@
     "classnames": "^2.2.5",
     "cloudinary-react": "^1.0.6",
     "express": "^4.15.0",
+    "express-graphql": "^0.6.12",
+    "graphql": "^0.13.2",
     "jquery": "^3.2.1",
     "jquery-param": "^0.2.0",
     "material-ui": "^1.0.0-beta.27",
     "material-ui-icons": "^1.0.0-beta.17",
     "mongoose": "^4.8.6",
+    "node-fetch": "^2.1.1",
     "prop-types": "^15.6.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
@@ -46,6 +49,7 @@
     "react-popper": "^0.7.5",
     "react-render-html": "^0.6.0",
     "react-swipeable-views": "^0.12.12",
-    "xml-js": "^1.6.2"
+    "xml-js": "^1.6.2",
+    "xml2js": "^0.4.19"
   }
 }
