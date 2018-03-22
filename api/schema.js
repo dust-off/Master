@@ -85,13 +85,6 @@ const {
 function getBookDetails(isbn = '9781451648546') {
   console.log('book', isbn);
   console.log('');
-  // console.log('');
-  // console.log('');
-
-  // Query the book database by ISBN code.
-  // isbn = isbn || '9781451648546'; // Steve Jobs book
-
-  // const url = `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`;
 
   return fetch(`https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn}`)
     .then(response => response.text())
@@ -113,29 +106,32 @@ function getBookDetails(isbn = '9781451648546') {
 }
 //----------------------
 
-// const AuthorType = new GraphQLObjectType({
-//   name: 'Author',
-//   description: '...',
+const AuthorType = new GraphQLObjectType({
+  name: 'Author',
+  description: '...',
 
-//   fields: () => ({
-//     name: {
-//       tyepe: GraphQLString,
-//       resolve: obj => 'test',
-//     },
-//   }),
-// });
+  fields: () => ({
+    name: {
+      type: GraphQLString,
+      resolve: (obj) => {
+        console.log('second resolve', obj);
+        return obj;
+      },
+    },
+  }),
+});
 
 const BookType = new GraphQLObjectType({
   name: 'Book',
   description: '...',
 
   fields: () => ({
-    author: {
-      type: GraphQLString, // GraphQLList(AuthorType),
+    authors: {
+      type: new GraphQLList(AuthorType),
       resolve: (obj) => {
         const { authors } = obj.volumeInfo;
         console.log('second resolve', authors);
-        return authors[0];
+        return authors;
       },
     },
   }),
@@ -161,3 +157,37 @@ module.exports = new GraphQLSchema({
     }),
   }),
 });
+
+
+// other code
+
+// function getBookDetails(isbn) {
+
+//   // Query the book database by ISBN code.
+//   isbn = isbn || "9781451648546"; // Steve Jobs book
+
+//   var url = "https://www.googleapis.com/books/v1/volumes?q=isbn:" + isbn;
+
+//   var response = UrlFetchApp.fetch(url);
+//   var results = JSON.parse(response);
+
+//   if (results.totalItems) {
+
+//     // There'll be only 1 book per ISBN
+//     var book = results.items[0];
+
+//     var title = (book["volumeInfo"]["title"]);
+//     var subtitle = (book["volumeInfo"]["subtitle"]);
+//     var authors = (book["volumeInfo"]["authors"]);
+//     var printType = (book["volumeInfo"]["printType"]);
+//     var pageCount = (book["volumeInfo"]["pageCount"]);
+//     var publisher = (book["volumeInfo"]["publisher"]);
+//     var publishedDate = (book["volumeInfo"]["publishedDate"]);
+//     var webReaderLink = (book["accessInfo"]["webReaderLink"]);
+
+//     // For debugging
+//     Logger.log(book);
+
+//   }
+
+// }
