@@ -10,21 +10,23 @@ const {
   GraphQLInt,
 } = require('graphql');
 
-const graphTest = () => {
-  // axios.get(`https://api.nytimes.com/svc/books/v3/lists.json?list-name=hardcover-fiction&api-key=${NYTKey}`)
-  //   .then((response) => {
-  //     return response.data.results;
-  //   })
-  //   .then((json) => {
-  //     console.log('');
-  //     console.log('');
-  //     console.log('json', JSON.stringify(json, null, 2));
-  //   })
-  //   .then(() => {
-  //     console.log('finished');
-  //   });
+const nycBestSellers = () => {
+  axios.get(`https://api.nytimes.com/svc/books/v3/lists.json?list-name=hardcover-fiction&api-key=${NYTKey}`)
+    .then(response => response.data.results)
+    .then((json) => {
+      console.log('');
+      console.log('');
+      console.log('json', JSON.stringify(json, null, 2));
+    })
+    .then(() => {
+      console.log('finished');
+    })
+    .catch((err) => {
+      console.log('nycBestSellers returned an error from the NYC website');
+      return err;
+    });
   // x();
-  getBookDetails(9781250130938);
+  // getBookDetails(9781250130938);
 };
 
 // const x = fetch(`https://www.goodreads.com/book/show/36354802?format=xml&key=6oijAUTgvAWaektHWXBqkQ`)
@@ -126,4 +128,4 @@ function getBookDetails(isbn = '9781451648546') {
 
 // // 9781250130938 = isbn13
 
-// module.exports = { graphTest, schema };
+module.exports = { nycBestSellers };

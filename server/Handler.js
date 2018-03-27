@@ -193,6 +193,9 @@ module.exports = {
       }
     });
   },
+  getBestSellers2: (req, res) => {
+
+  },
   postReview: (req, res) => {
     db.saveReview(req.body, (err, data) => {
       res.json([err, data]);

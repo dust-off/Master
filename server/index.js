@@ -14,6 +14,9 @@ app.use('/graphql', graphqlHTTP({
   graphiql: true,
 }));
 
+// const { nycBestSellers } = require('../api/graphQL.js');
+// nycBestSellers();
+
 app.get('/user/:username', handler.getUserByName);
 app.post('/login', handler.postLogin);
 app.post('/signup', handler.postSignUp);
@@ -22,6 +25,7 @@ app.get('/items', handler.getAllBooks);
 app.get('/book/:isbn', handler.getBookByISBN);
 app.get('/search/:title', handler.getSearchTitle);
 app.get('/bestSellers', handler.getBestSellers);
+// app.get('/bestSellers2', handler.getBestSellers2);
 app.post('/review', handler.postReview);
 app.get('/proreviews/:isbn', handler.getProReviews);
 // app.get('/proreviews/:isbn', (req, res) => res.json('hi'));
