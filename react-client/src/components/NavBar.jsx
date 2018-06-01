@@ -5,12 +5,12 @@ import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
-import IconButton from 'material-ui/IconButton';
-import Dialog from 'material-ui/Dialog';
-import MenuIcon from 'material-ui-icons/Menu';
-import MenueButton from './MenueButton.jsx';
-import Search from './Search.jsx';
-import Login from './Login.jsx';
+// import IconButton from 'material-ui/IconButton';
+// import Dialog from 'material-ui/Dialog';
+// import MenuIcon from 'material-ui-icons/Menu';
+// import MenueButton from './MenueButton.jsx';
+import Search from './Search';
+import Login from './Login';
 
 const styles = {
   root: {
@@ -35,11 +35,11 @@ class NavBar extends React.Component {
     this.handleBookPageClick = this.handleBookPageClick.bind(this);
   }
 
-  handleHomeClick(){
+  handleHomeClick() {
     this.props.handleMenuBarClick(null);
   }
 
-  handleBookPageClick(){
+  handleBookPageClick() {
     this.props.handleMenuBarClick('Book');
   }
 

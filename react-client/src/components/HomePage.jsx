@@ -4,7 +4,7 @@ import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import { CircularProgress } from 'material-ui/Progress';
 
-import BookCard from './BookCard.jsx';
+import BookCard from './BookCard';
 
 const styles = theme => ({
   root: {

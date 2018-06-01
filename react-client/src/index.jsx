@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 
-import ProfilePage from './components/ProfilePage.jsx';
-import BookPage from './components/BookPage.jsx';
-import HomePage from './components/HomePage.jsx';
-import NavBar from './components/NavBar.jsx';
-import SearchPage from './components/SearchPage.jsx';
+import ProfilePage from './components/ProfilePage';
+import BookPage from './components/BookPage';
+import HomePage from './components/HomePage';
+import NavBar from './components/NavBar';
+import SearchPage from './components/SearchPage';
 
 class App extends React.Component {
   constructor(props) {
@@ -40,7 +40,7 @@ class App extends React.Component {
   }
 
   changeView(choice, book) {
-    console.log('changing view');
+    // console.log('changing view');
     // console.log(choice, book);
     if (book) {
       this.setState({
@@ -62,7 +62,7 @@ class App extends React.Component {
     const data = {
       review, user, isbn13, rating,
     };
-    console.log('inside the APP @ 50', data);
+    // console.log('inside the APP @ 50', data);
 
     fetch('/review', {
       method: 'POST',
